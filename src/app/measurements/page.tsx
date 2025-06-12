@@ -21,14 +21,14 @@ import {
 import MeasurementModal from '@/components/MeasurementModal';
 import Navbar from '@/components/Navbar';
 import { testData } from '@/lib/data';
-
 import { role } from "@/lib/data"
+import Table2 from '@/components/MeasurementsTable';
 
 
 export type Measurement = {
   id: string;
   patientId: string;
-  patientName: string;
+  measurementName: string;
   testDate: string;
   testType: string;
   stabilityScore: number;
@@ -42,7 +42,7 @@ export type Measurement = {
 }
 
 interface MeasurementsTableProps {
-  patient?: string;
+  measurement?: string;
   initialMeasurements?: Measurement[];
   showSubjectColumn?: boolean;
 }
@@ -50,7 +50,7 @@ interface MeasurementsTableProps {
 
 const columns = [
     {
-        header: "Patient",
+        header: "Measurement",
         accessor: "title",
     },
     {
@@ -81,72 +81,33 @@ const columns = [
 
 
 const MeasurementsPage = ({
-  patient,
+  measurement,
   initialMeasurements = [],
   showSubjectColumn = true
 }: MeasurementsTableProps) => {
-  const [measurements, setMeasurements] = useState<Measurement[]>([
-    {
-      id: '1',
-      patientId: 'P001',
-      patientName: 'John Smith',
-      testDate: '2025-06-10',
-      testType: 'Static Balance',
-      stabilityScore: 87.5,
-      balanceIndex: 92.1,
-      duration: 120,
-      status: 'completed',
-      notes: 'Excellent progress shown',
-      deviceId: 'DEV001',
-      createdAt: '2025-06-10T10:30:00Z'
-    },
-    {
-      id: '2',
-      patientId: 'P002',
-      patientName: 'Sarah Johnson',
-      testDate: '2025-06-11',
-      testType: 'Dynamic Balance',
-      stabilityScore: 74.2,
-      balanceIndex: 78.9,
-      duration: 180,
-      status: 'completed',
-      notes: 'Some improvement needed',
-      deviceId: 'DEV002',
-      createdAt: '2025-06-11T14:15:00Z'
-    },
-    {
-      id: '3',
-      patientId: 'P003',
-      patientName: 'Mike Davis',
-      testDate: '2025-06-12',
-      testType: 'Proprioceptive',
-      stabilityScore: 91.3,
-      balanceIndex: 89.7,
-      duration: 150,
-      status: 'in-progress',
-      notes: 'Test in progress',
-      deviceId: 'DEV001',
-      createdAt: '2025-06-12T09:00:00Z'
-    }]
-  );
-
+  const [measurements, setMeasurements] = useState<Measurement[]>(initialMeasurements);
+  
+  // Filters
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [testTypeFilter, setTestTypeFilter] = useState('all');
+
+  // Add / Edit
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedMeasurement, setSelectedMeasurement] = useState<Measurement | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedMeasurementId, setSelectedMeasurementId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const itemsPerPage = 10;
 
-  // Filter measurements
+  {/* Filter measurements */}
   const filteredMeasurements = measurements.filter(measurement => {
     const matchesSearch = 
-      measurement.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      measurement.measurementName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       measurement.patientId.toLowerCase().includes(searchTerm.toLowerCase()) ||
       measurement.testType.toLowerCase().includes(searchTerm.toLowerCase());
     
@@ -161,6 +122,8 @@ const MeasurementsPage = ({
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedMeasurements = filteredMeasurements.slice(startIndex, startIndex + itemsPerPage);
 
+
+  {/* FUNCTIONS */}
   const handleAddMeasurement = (newMeasurement: Omit<Measurement, 'id' | 'createdAt'>) => {
     const measurement: Measurement = {
       ...newMeasurement,
@@ -203,7 +166,7 @@ const MeasurementsPage = ({
           const measurement: Measurement = {
             id: Date.now().toString() + i,
             patientId: values[0] || '',
-            patientName: values[1] || '',
+            measurementName: values[1] || '',
             testDate: values[2] || '',
             testType: values[3] || '',
             stabilityScore: parseFloat(values[4]) || 0,
@@ -231,7 +194,7 @@ const MeasurementsPage = ({
       headers.join(','),
       ...filteredMeasurements.map(m => [
         m.patientId,
-        m.patientName,
+        m.measurementName,
         m.testDate,
         m.testType,
         m.stabilityScore,
@@ -254,7 +217,7 @@ const MeasurementsPage = ({
 
   const openMeasurementDetail = (measurement: Measurement) => {
     // In a real app, this would navigate to a detail page
-    alert(`Opening detail page for measurement ID: ${measurement.id}\nPatient: ${measurement.patientName}`);
+    alert(`Opening detail page for measurement ID: ${measurement.id}\nPatient: ${measurement.measurementName}`);
   };
 
   const getStatusColor = (status: string) => {
@@ -307,142 +270,11 @@ const MeasurementsPage = ({
 
       {/* Filters and Search */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="rounded-lg shadow-sm p-4 mb-6">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search by patient name, ID, or test type..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="all">All Status</option>
-                <option value="completed">Completed</option>
-                <option value="in-progress">In Progress</option>
-                <option value="failed">Failed</option>
-              </select>
-              <select
-                value={testTypeFilter}
-                onChange={(e) => setTestTypeFilter(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="all">All Test Types</option>
-                <option value="Static Balance">Static Balance</option>
-                <option value="Dynamic Balance">Dynamic Balance</option>
-                <option value="Proprioceptive">Proprioceptive</option>
-              </select>
-            </div>
-          </div>
-        </div>
+        
 
-        {/* Table */}
-        <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Test Info</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Scores</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Added</th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {paginatedMeasurements.map((measurement) => (
-                  <tr 
-                    key={measurement.id} 
-                    className="hover:bg-gray-50 cursor-pointer transition-colors"
-                    onClick={() => openMeasurementDetail(measurement)}
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10">
-                          <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                            <User className="h-5 w-5 text-blue-600" />
-                          </div>
-                        </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">{measurement.patientName}</div>
-                          <div className="text-sm text-gray-500">ID: {measurement.patientId}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{measurement.testType}</div>
-                      {/* <div className="text-sm text-gray-500 flex items-center">
-                        <Calendar className="w-3 h-3 mr-1" />
-                        {measurement.testDate}
-                      </div> */}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">Stability: {measurement.stabilityScore}%</div>
-                      <div className="text-sm text-gray-500">Balance: {measurement.balanceIndex}%</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(measurement.status)}`}>
-                        {measurement.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <div className="flex items-center">
-                        {/* <Activity className="w-3 h-3 mr-1" /> */}
-                        {measurement.testDate}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex items-center justify-end space-x-2">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openMeasurementDetail(measurement);
-                          }}
-                          className="text-blue-600 hover:text-blue-900 p-1 rounded"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedMeasurement(measurement);
-                            setShowEditModal(true);
-                          }}
-                          className="text-gray-600 hover:text-gray-900 p-1 rounded"
-                        >
-                          <Edit3 className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedMeasurementId(measurement.id);
-                            setShowDeleteConfirm(true);
-                          }}
-                          className="text-red-600 hover:text-red-900 p-1 rounded"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                        <ChevronRight className="w-4 h-4 text-gray-400" />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        <Table2 />
 
-          {/* Pagination */}
+        {/* Pagination */}
           {totalPages > 1 && (
             <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">
               <div className="flex-1 flex justify-between sm:hidden">
@@ -490,7 +322,7 @@ const MeasurementsPage = ({
             </div>
           )}
         </div>
-      </div>
+
 
       {/* Hidden file input for CSV import */}
       <input
@@ -501,51 +333,6 @@ const MeasurementsPage = ({
         className="hidden"
       />
 
-      {/* Add/Edit Modal */}
-      {(showAddModal || showEditModal) && (
-        <MeasurementModal
-          isEdit={showEditModal}
-          measurement={selectedMeasurement}
-          onSave={showEditModal ? handleUpdateMeasurement : handleAddMeasurement}
-          onClose={() => {
-            setShowAddModal(false);
-            setShowEditModal(false);
-            setSelectedMeasurement(null);
-          }}
-        />
-      )}
-
-      {/* Delete Confirmation Modal */}
-      {showDeleteConfirm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <div className="flex items-center mb-4">
-              <AlertCircle className="w-6 h-6 text-red-600 mr-3" />
-              <h3 className="text-lg font-semibold text-gray-900">Delete Measurement</h3>
-            </div>
-            <p className="text-gray-600 mb-6">
-              Are you sure you want to delete this measurement? This action cannot be undone.
-            </p>
-            <div className="flex justify-end space-x-3">
-              <button
-                onClick={() => {
-                  setShowDeleteConfirm(false);
-                  setSelectedMeasurementId(null);
-                }}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => selectedMeasurementId && handleDeleteMeasurement(selectedMeasurementId)}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

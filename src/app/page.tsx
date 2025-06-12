@@ -67,7 +67,7 @@ const ProprioLogicsLanding = () => {
             
             <button className="flex items-center space-x-2 text-white border-2 border-white px-8 py-4 rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300">
               <Play className="w-5 h-5" />
-              <span>Watch Demo</span>
+              <span>Watch Tutorials</span>
             </button>
           </div>
         </div>
