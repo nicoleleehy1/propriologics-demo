@@ -51,15 +51,17 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-teal-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">P</span>
               </div>
-              <span className={`font-semibold text-lg transition-colors ${
-                isScrolled ? 'text-gray-900' : 'text-white'
-              }`}>
-                Propriologics
-              </span>
+              <a href="/">
+                <span className={`font-semibold text-lg transition-colors ${
+                  isScrolled ? 'text-gray-900' : 'text-white'
+                }`}>
+                  Propriologics
+                </span>
+              </a>
             </div>
             
             <div className="hidden md:flex items-center space-x-8">
-              {['Product', 'Tutorials', 'Measurements'].map((item) => (
+              {['Downloads', 'Tutorials', 'Measurements'].map((item) => (
                 <a
                   key={item}
                   href={`${item.toLowerCase()}`}

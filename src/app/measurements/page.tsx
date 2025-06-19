@@ -22,7 +22,7 @@ import MeasurementModal from '@/components/MeasurementModal';
 import Navbar from '@/components/Navbar';
 import { testData } from '@/lib/data';
 import { role } from "@/lib/data"
-import Table2 from '@/components/MeasurementsTable';
+import MeasurementsTable from '@/components/MeasurementsTable';
 
 
 export type Measurement = {
@@ -272,7 +272,7 @@ const MeasurementsPage = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
 
-        <Table2 />
+        <MeasurementsTable />
 
         {/* Pagination */}
           {totalPages > 1 && (
