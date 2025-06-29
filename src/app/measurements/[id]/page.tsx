@@ -1,9 +1,46 @@
+"use client"
+
 import DistributionGraph from "@/components/DistributionGraph"
 import { ChartAreaInteractive } from "@/components/LineChart"
+import { ChartLineInteractive } from "@/components/LineChart2"
 import Navbar from "@/components/Navbar"
+import { chartData } from "@/lib/rollpitchData"
+import { Radar, RadarChart, PolarAngleAxis, PolarGrid } from "recharts"
+import { rollpitchData } from "@/lib/rollpitchData"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart"
+import { ChartRadarRollPitch } from "@/components/RadarChart2"
+
+
+
 
 
 const AdminPage = () => {
+
+  const chartData = rollpitchData.map((point, index) => ({
+      angle: `angle_${index + 1}`,
+      rollpitch: point.y,
+    }))
+  
+  const chartConfig = {
+      rollpitch: {
+        label: "Roll-Pitch Y",
+        color: "var(--chart-1)",
+      },
+  } satisfies ChartConfig
+
   return (
     <div>
       <Navbar theme='light'/>
@@ -16,6 +53,7 @@ const AdminPage = () => {
         {/* USER CARDS */}
           <div className="flex gap-4 justify-between flex-wrap">
               {/* Card */}
+
           </div>
 
         {/* MIDDLE CHARTS */}
@@ -52,6 +90,10 @@ const AdminPage = () => {
           />
         </div>
       </div>
+      
+
+      <ChartRadarRollPitch />
+      
     </div>
     
   )

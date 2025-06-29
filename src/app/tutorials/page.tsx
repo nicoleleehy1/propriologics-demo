@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import { X, Play, Clock, User } from 'lucide-react';
+import Navbar from '@/components/Navbar';
 
 interface Tutorial {
   id: number;
@@ -21,8 +22,8 @@ const VideoTutorialPage: React.FC = () => {
   const tutorials: Tutorial[] = [
     {
       id: 1,
-      title: "Getting Started with React",
-      description: "Learn the fundamentals of React development",
+      title: "PIEZO2",
+      description: "Learn the fundamentals of the hardware vest.",
       duration: "15:30",
       instructor: "Jane Smith",
       thumbnail: "https://via.placeholder.com/400x225/3B82F6/ffffff?text=React+Basics",
@@ -32,8 +33,8 @@ const VideoTutorialPage: React.FC = () => {
     },
     {
       id: 2,
-      title: "Advanced TypeScript Patterns",
-      description: "Master advanced TypeScript techniques",
+      title: "Tutorial 2",
+      description: "Mastering the database",
       duration: "22:45",
       instructor: "John Doe",
       thumbnail: "https://via.placeholder.com/400x225/8B5CF6/ffffff?text=TypeScript+Advanced",
@@ -43,8 +44,8 @@ const VideoTutorialPage: React.FC = () => {
     },
     {
       id: 3,
-      title: "Next.js App Router Deep Dive",
-      description: "Explore the new App Router in Next.js 13+",
+      title: "Tutorial 3",
+      description: "Explore ...",
       duration: "28:12",
       instructor: "Sarah Wilson",
       thumbnail: "https://via.placeholder.com/400x225/10B981/ffffff?text=Next.js+App+Router",
@@ -54,7 +55,7 @@ const VideoTutorialPage: React.FC = () => {
     },
     {
       id: 4,
-      title: "CSS Grid & Flexbox Mastery",
+      title: "Tutorial 4",
       description: "Master modern CSS layout techniques",
       duration: "18:45",
       instructor: "Mike Johnson",
@@ -65,7 +66,7 @@ const VideoTutorialPage: React.FC = () => {
     },
     {
       id: 5,
-      title: "API Design Best Practices",
+      title: "Tutorial 5",
       description: "Build robust and scalable APIs",
       duration: "35:20",
       instructor: "Alex Chen",
@@ -76,7 +77,7 @@ const VideoTutorialPage: React.FC = () => {
     },
     {
       id: 6,
-      title: "Database Optimization Techniques",
+      title: "Tutorial 6",
       description: "Optimize your database performance",
       duration: "31:15",
       instructor: "Lisa Park",
@@ -97,8 +98,11 @@ const VideoTutorialPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <div><Navbar theme="light" /></div>
+
       {/* Header */}
-      <header className="bg-white shadow-sm -b pt-10">
+      <header className="bg-white shadow-sm pt-24">
+        {/* ↑ pt-24 adds enough top padding to clear the Navbar */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-gray-900 mb-2">

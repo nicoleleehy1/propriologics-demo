@@ -4668,3 +4668,9 @@ export const rollpitchData = [
     "y": -0.0136561
   }
 ]
+
+export const chartData = rollpitchData.map((point, index) => ({
+  angle: `angle_${index + 1}`,
+  rollpitch: point.y,
+}))
+
