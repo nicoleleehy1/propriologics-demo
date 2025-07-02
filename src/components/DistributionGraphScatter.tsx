@@ -49,10 +49,6 @@ export default function DistributionDiagram() {
   }, [])
 
   return (
-    <Card className="relative">
-      <CardHeader>
-        <CardTitle>Distribution Diagram</CardTitle>
-      </CardHeader>
       <CardContent className="relative h-[500px]">
         {/* Labels using massData */}
         {/* Front Badge (A, B, C, D) */}
@@ -155,6 +151,5 @@ export default function DistributionDiagram() {
           <Scatter name="Points" data={rollpitchData} fill="#4F46E5" />
         </ScatterChart>
       </CardContent>
-    </Card>
   )
 }

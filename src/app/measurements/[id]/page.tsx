@@ -1,12 +1,12 @@
 "use client"
 
-import DistributionGraph from "@/components/DistributionGraph"
+import DistributionGraph from "@/components/DistributionGraphScatter"
 import { ChartAreaInteractive } from "@/components/LineChart"
 import { ChartLineInteractive } from "@/components/LineChart2"
 import Navbar from "@/components/Navbar"
-import { chartData } from "@/lib/rollpitchData"
+import { AppSidebar } from "@/components/menu/app-sidebar"
+
 import { Radar, RadarChart, PolarAngleAxis, PolarGrid } from "recharts"
-import { rollpitchData } from "@/lib/rollpitchData"
 import {
   Card,
   CardContent,
@@ -21,7 +21,25 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { ChartRadarRollPitch } from "@/components/RadarChart2"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+
+import { ChartRollPitch } from "@/components/RadarChart"
+
+import { chartData } from "@/lib/rollpitchData"
+import { rollpitchData } from "@/lib/rollpitchData"
 
 
 
@@ -90,9 +108,6 @@ const AdminPage = () => {
           />
         </div>
       </div>
-      
-
-      <ChartRadarRollPitch />
       
     </div>
     

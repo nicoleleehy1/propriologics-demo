@@ -23,7 +23,7 @@ mass = 2.5
 
 def wght_computation(args):
     filename = args.input_csv_file
-    sensing_data = pd.read_csv(filename, header=1, names = ['roll', 'pitch'])
+    sensing_data = pd.read_csv(filename)
     input_vector = np.hstack( [ np.asarray( sensing_data.roll ).reshape( [-1, 1]), np.asarray( sensing_data.pitch ).reshape( [-1, 1])] )
     x = input_vector[:,0]
     y = input_vector[:,1]
@@ -73,7 +73,11 @@ def wght_computation(args):
         else:
             dominant_lengths[i] -= np.fabs( xmin/np.cos( cur_orientation) )
 
-    mass_assignment = mass * dominant_lengths / np.sum( dominant_lengths )
+    total_length = np.sum(dominant_lengths)
+    if total_length == 0:
+        mass_assignment = np.zeros_like(dominant_lengths)
+    else:
+        mass_assignment = mass * dominant_lengths / total_length
     mass_assignment = mass_assignment.reshape([-1])
 
     results = {}

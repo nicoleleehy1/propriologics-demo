@@ -20,8 +20,6 @@ import {
 } from 'lucide-react';
 import MeasurementModal from '@/components/MeasurementModal';
 import Navbar from '@/components/Navbar';
-import { testData } from '@/lib/data';
-import { role } from "@/lib/data"
 import MeasurementsTable from '@/components/MeasurementsTable';
 
 

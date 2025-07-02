@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
 
   return new Promise((resolve) => {
     const process = spawn("python3", [
-      "scripts/compute-weight.py",
+      "scripts/wght_computation.py",
       "--input_csv_file",
       tmpFilePath,
     ])
