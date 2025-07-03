@@ -1,7 +1,7 @@
-const MeasurementsPage = () => {
+const DownloadsPage = () => {
   return (
     <div className=''></div>
   )
 }
 
-export default MeasurementsPage
+export default DownloadsPage
