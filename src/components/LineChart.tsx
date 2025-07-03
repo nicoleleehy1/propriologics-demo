@@ -211,6 +211,7 @@ export function ChartAreaInteractive(
           </Select>
         </CardAction>
       </CardHeader>
+
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-4">
         <ChartContainer
           config={chartConfig}
@@ -254,7 +255,7 @@ export function ChartAreaInteractive(
                 strokeWidth={2}
                 dot={false}
             />
-            </LineChart>
+          </LineChart>
         </ChartContainer>
       </CardContent>
     </Card>
