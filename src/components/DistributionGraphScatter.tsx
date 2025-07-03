@@ -140,13 +140,13 @@ export default function DistributionDiagram() {
           <ReferenceLine x={0} stroke="#000" strokeWidth={1} />
           <ReferenceLine y={0} stroke="#000" strokeWidth={1} />
           <ReferenceArea
-            x1={-1.5}
-            x2={1.5}
-            y1={-3.5}
-            y2={-3.0}
-            stroke="red"
-            fill="red"
-            fillOpacity={1}
+              x1={-0.3}
+              x2={0.1}
+              y1={-0.1}
+              y2={0.3}
+              stroke="red"
+              fill="red"
+              fillOpacity={0.2}
           />
           <Scatter name="Points" data={rollpitchData} fill="#4F46E5" />
         </ScatterChart>
