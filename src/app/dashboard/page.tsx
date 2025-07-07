@@ -1,3 +1,5 @@
+import { DataTable } from "@/components/data-table"
+import data from "./data.json"
 import { ChartAreaInteractive } from "@/components/LineChart"
 import { AppSidebar } from "@/components/menu/app-sidebar"
 import { ChartRollPitch } from "@/components/RadarChart"
@@ -55,15 +57,11 @@ export default function Page() {
                 title="Lateral"
                 description="Lateral movement graphed over XY Time."
             />
-            <ChartAreaInteractive
-                title="Directional"
-            />
-            <ChartAreaInteractive
-                title="Anteroposterior"
-            />
             </div>
           </div>
-          <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min"></div>
+          <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min">
+            <DataTable data={data}/>
+          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>

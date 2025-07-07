@@ -2,7 +2,6 @@
 
 import DistributionGraph from "@/components/DistributionGraphScatter"
 import { ChartAreaInteractive } from "@/components/LineChart"
-import { ChartLineInteractive } from "@/components/LineChart2"
 import Navbar from "@/components/Navbar"
 import { AppSidebar } from "@/components/menu/app-sidebar"
 
@@ -76,7 +75,6 @@ const AdminPage = () => {
 
         {/* MIDDLE CHARTS */}
           <div className="flex gap-4 flex-col lg:flex-row">
-            <DistributionGraph />
             {/* PROGRESS TRACKER CHART */}
             <div className="w-full lg:w-1/3 h-[450px]">
               {/* Pie Chart */}
@@ -96,16 +94,8 @@ const AdminPage = () => {
         
         {/* RIGHT */}
         <div className='w-full lg:w-1/3 flex flex-col gap-8'>
-          <ChartAreaInteractive
-              title="Lateral"
-              description="Lateral movement graphed over XY Time."
-          />
-          <ChartAreaInteractive
-              title="Directional"
-          />
-          <ChartAreaInteractive
-              title="Anteroposterior"
-          />
+
+
         </div>
       </div>
       
